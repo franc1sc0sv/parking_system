@@ -22,7 +22,7 @@ const Reservations = () => {
 
   const handlefinalizarReserva = async (id) => {
     await finalizarReserva(id);
-    navigate('/parkingSlot')
+    navigate("/parkingSlot");
   };
 
   return (
