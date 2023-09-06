@@ -1,45 +1,29 @@
 import React from "react";
 import Header from "../../components/Header";
+import { useFetch } from "../../hooks/useFetch";
+import { finalizarReserva, obtenerReservas } from "../../api";
+import { useNavigate } from "react-router-dom";
+
+export const fechaNormal = (date, languaje = "es") => {
+  return new Date(date).toLocaleDateString(languaje, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
+};
 
 const Reservations = () => {
-  const reservationsData = [
-    {
-      id: 1,
-      parkingNumber: "A1",
-      startTime: "08:00 AM",
-      endTime: "09:00 AM",
-      isActive: true,
-    },
-    {
-      id: 2,
-      parkingNumber: "A2",
-      startTime: "09:30 AM",
-      endTime: "10:30 AM",
-      isActive: false,
-    },
-    {
-      id: 3,
-      parkingNumber: "A3",
-      startTime: "10:45 AM",
-      endTime: "11:45 AM",
-      isActive: true,
-    },
-    {
-      id: 4,
-      parkingNumber: "A4",
-      startTime: "12:00 PM",
-      endTime: "01:00 PM",
-      isActive: false,
-    },
-    {
-      id: 5,
-      parkingNumber: "A5",
-      startTime: "01:15 PM",
-      endTime: "02:15 PM",
-      isActive: true,
-    },
-    // Puedes agregar más datos de muestra según sea necesario
-  ];
+  const { reservas, isLoading } = useFetch("reservas", obtenerReservas);
+  if (isLoading) return <p>Cargando . . .</p>;
+  const navigate = useNavigate();
+
+  const handlefinalizarReserva = async (id) => {
+    await finalizarReserva(id);
+    navigate('/parkingSlot')
+  };
 
   return (
     <div className="min-h-screen text-white bg-gray-900">
@@ -49,7 +33,7 @@ const Reservations = () => {
         <div className="container mx-auto text-center">
           <h1 className="mb-4 text-2xl font-bold text-white">Mis reservas</h1>
           <div className="overflow-x-auto">
-            <Table data={reservationsData} />
+            <Table data={reservas} />
           </div>
         </div>
       </section>
@@ -71,6 +55,7 @@ const Table = ({ data }) => {
             <th className="px-4 py-2">Acciones</th>
           </tr>
         </thead>
+
         <tbody className="text-gray-700">
           {data.map((reservation, index) => (
             <tr
@@ -79,12 +64,17 @@ const Table = ({ data }) => {
             >
               <td className="px-4 py-2 text-white ">{reservation.id}</td>
               <td className="px-4 py-2 text-white ">
-                {reservation.parkingNumber}
+                {reservation.idParqueo >= 10 ? "" : "0"}
+                {reservation.idParqueo}
               </td>
-              <td className="px-4 py-2 text-white ">{reservation.startTime}</td>
-              <td className="px-4 py-2 text-white ">{reservation.endTime}</td>
               <td className="px-4 py-2 text-white ">
-                {reservation.isActive ? (
+                {fechaNormal(reservation.fechaInicial)}
+              </td>
+              <td className="px-4 py-2 text-white ">
+                {fechaNormal(reservation.fechaFinal)}
+              </td>
+              <td className="px-4 py-2 text-white ">
+                {reservation.estado === "activo" ? (
                   <span className="text-green-500">Activo</span>
                 ) : (
                   <span className="text-red-500">Finalizado</span>

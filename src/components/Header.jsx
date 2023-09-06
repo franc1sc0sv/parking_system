@@ -18,7 +18,7 @@ const Header = () => {
             Mis reservas
           </Link>
         </div>
-        <div className="space-x-4">
+        {/* <div className="space-x-4">
           <Link to="/login" className="text-white">
             Iniciar Sesión
           </Link>
@@ -28,7 +28,7 @@ const Header = () => {
           >
             Registrarse
           </Link>
-        </div>
+        </div> */}
       </nav>
     </header>
   );
