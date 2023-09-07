@@ -12,9 +12,11 @@ const ParkingSlot = () => {
   const [Modal, { modalState, toggleModal }] = useModal();
   const { setParqueo } = parqueoIDs();
 
-  const handleReservar = (parqueo) => {
-    setParqueo(parqueo);
-    toggleModal(true);
+  const handleReservar = (parqueo, sePuedeReservar) => {
+    if (sePuedeReservar) {
+      setParqueo(parqueo);
+      toggleModal(true);
+    }
   };
   if (isLoading) return <p>Cargando . . .</p>;
   return (

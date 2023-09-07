@@ -54,7 +54,7 @@ const ParkingSlot = ({ isTheLast, isAvailable, parqueo, handleReservar }) => {
   return (
     <div
       onClick={() => {
-        handleReservar(parqueo.id);
+        handleReservar(parqueo.id, parqueo.sePuedeReservar);
       }}
       className={`relative cursor-pointer justify-end flex w-56 border-[#40454c] h-28 border-t-4  ${boderB}`}
     >
@@ -89,7 +89,7 @@ const ParkingSlotReverse = ({
   return (
     <div
       onClick={() => {
-        handleReservar(parqueo.id);
+        handleReservar(parqueo.id, parqueo.sePuedeReservar);
       }}
       className={`relative cursor-pointer justify-end flex w-56 border-[#40454c] h-28 border-t-4  ${boderB}`}
     >

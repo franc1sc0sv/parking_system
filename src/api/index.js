@@ -32,8 +32,8 @@ export const obtenerReservas = async () => {
 
 export const finalizarReserva = async (id) => {
   try {
-    const { data } = await clienteAxios.get(
-      `http://localhost:8080//reservas/${id}`
+    const { data } = await clienteAxios.put(
+      `http://localhost:8080/reservas/${id}`
     );
     return data;
   } catch (error) {
