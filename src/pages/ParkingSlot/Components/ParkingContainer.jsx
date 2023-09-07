@@ -13,7 +13,15 @@ const getParqueos = (jsonData) => {
 };
 
 const ParkingContainer = ({ parqueos, handleReservar }) => {
-  const { parqueosReservables, parqueosNoReservables } = getParqueos(parqueos);
+  const formatedParqueos = parqueos.map((parqueo) => {
+    const estaReservado = parqueo.reservas.some(
+      (reserva) => reserva.estado === "activo"
+    );
+    return { ...parqueo, estaReservado };
+  });
+  const { parqueosReservables, parqueosNoReservables } =
+    getParqueos(formatedParqueos);
+
   const noParqueosReservables = parqueosReservables.length;
   const noParqueosNoReservables = parqueosNoReservables.length;
 
@@ -49,12 +57,15 @@ const ParkingContainer = ({ parqueos, handleReservar }) => {
 };
 
 const ParkingSlot = ({ isTheLast, isAvailable, parqueo, handleReservar }) => {
-  const { numeroParqueo } = parqueo;
+  const { numeroParqueo, estaReservado } = parqueo;
   const boderB = isTheLast ? "border-b-4" : "";
+
   return (
     <div
       onClick={() => {
-        handleReservar(parqueo.id, parqueo.sePuedeReservar);
+        if (!estaReservado) {
+          handleReservar(parqueo.id, parqueo.sePuedeReservar);
+        }
       }}
       className={`relative cursor-pointer justify-end flex w-56 border-[#40454c] h-28 border-t-4  ${boderB}`}
     >
@@ -66,7 +77,9 @@ const ParkingSlot = ({ isTheLast, isAvailable, parqueo, handleReservar }) => {
         </div>
       ) : (
         <div className="grid w-full place-items-center">
-          <p className="text-[#a2a4ab] text-lg">Available</p>
+          <p className="text-[#a2a4ab] text-lg">
+            {estaReservado ? "Reservado" : "Disponible"}
+          </p>
         </div>
       )}
 
@@ -83,13 +96,15 @@ const ParkingSlotReverse = ({
   parqueo,
   handleReservar,
 }) => {
-  const { numeroParqueo } = parqueo;
+  const { numeroParqueo, estaReservado } = parqueo;
 
   const boderB = isTheLast ? "border-b-4" : "";
   return (
     <div
       onClick={() => {
-        handleReservar(parqueo.id, parqueo.sePuedeReservar);
+        if (!estaReservado) {
+          handleReservar(parqueo.id, parqueo.sePuedeReservar);
+        }
       }}
       className={`relative cursor-pointer justify-end flex w-56 border-[#40454c] h-28 border-t-4  ${boderB}`}
     >
@@ -99,7 +114,9 @@ const ParkingSlotReverse = ({
         </div>
       ) : (
         <div className="grid w-full place-items-center">
-          <p className="text-[#a2a4ab] text-lg">Available</p>
+          <p className="text-[#a2a4ab] text-lg">
+            {estaReservado ? "Reservado" : "Disponible"}
+          </p>
         </div>
       )}
 

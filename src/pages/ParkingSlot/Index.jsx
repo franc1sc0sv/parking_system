@@ -18,6 +18,7 @@ const ParkingSlot = () => {
       toggleModal(true);
     }
   };
+
   if (isLoading) return <p>Cargando . . .</p>;
   return (
     <div className="min-h-screen text-white bg-gray-900">

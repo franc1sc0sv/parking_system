@@ -10,17 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.0.1",
+    "axios": "^1.4.0",
+    "clsx": "^1.2.1",
+    "framer-motion": "^10.12.16",
+    "particle-api-js": "^9.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.4.0",
-    "framer-motion": "^10.12.16",
     "react-hook-form": "^7.45.1",
     "react-icons": "^4.9.0",
-    "react-router-dom": "^6.12.1",
-    "@uidotdev/usehooks": "^2.0.1",
     "react-query": "^3.39.3",
-    "zustand": "^4.3.8",
-    "clsx": "^1.2.1"
+    "react-router-dom": "^6.12.1",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
